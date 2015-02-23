@@ -1,0 +1,16 @@
+---
+
+- name: cluster | join riak cluster
+  riak: command=join target_node="{{ hostvars[riak_hosts[0]]['riak_node_facts']['node_name'] }}"
+  when: riak_hosts[0] != ansible_fqdn
+
+- name: cluster |  wait for nodes to settle
+  pause: seconds=30
+
+- name: cluster |  plan cluster changes
+  riak: command=plan
+  notify:
+   - wait for ring
+   - commit cluster changes
+   - wait for handoffs
+  when: riak_hosts[-1] == ansible_fqdn

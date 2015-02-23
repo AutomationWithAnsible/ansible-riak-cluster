@@ -1,0 +1,11 @@
+---
+
+- name: gatherfacts | Collect facts for inital riak node
+  riak: command=ping
+  register: result
+  when: riak_hosts[0] == ansible_fqdn
+
+- name : gatherfacts |  Set facts for initial riak node
+  set_fact:
+    riak_node_facts: "{{ result }}"
+  when: result is defined

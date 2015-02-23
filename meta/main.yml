@@ -1,0 +1,10 @@
+---
+galaxy_info:
+  author: Engin Yoyen,Joé Schaul
+  description: 
+  company: yetu
+  license: license (MIT)
+  min_ansible_version: 1.2
+
+dependencies:
+ - { role: basho.riak }
